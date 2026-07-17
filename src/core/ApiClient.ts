@@ -8,6 +8,7 @@ export class ApiClient {
     this.apiContext = await request.newContext({
       baseURL: ConfigManager.config.baseUrl,
       timeout: ConfigManager.config.timeout,
+      ignoreHTTPSErrors: true,
     });
   }
 
