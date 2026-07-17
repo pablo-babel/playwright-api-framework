@@ -1,0 +1,14 @@
+node_modules/
+playwright-report/
+test-results/
+blob-report/
+coverage/
+.env
+.env.*
+!.env.example
+.vscode/
+.DS_Store
+*.log
+dist/
+out/
+reports/
