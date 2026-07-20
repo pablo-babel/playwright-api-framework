@@ -1,7 +1,7 @@
 import { ApiClient } from "../core/ApiClient";
 
-export abstract class BaseService {
-  protected readonly apiClient: ApiClient;
+export class BaseService {
+  protected apiClient: ApiClient;
 
   constructor() {
     this.apiClient = new ApiClient();
