@@ -12,4 +12,20 @@ export class BookingService extends BaseService {
     return await this.apiClient.post("/booking", bookingData);
   }
 
+  public async getBooking(
+    bookingId: number
+  ): Promise<APIResponse> {
+
+    await this.initialize();
+
+    return await this.apiClient.get(`/booking/${bookingId}`);
+  }
+
+  public async getBookingIds(): Promise<APIResponse> {
+
+    await this.initialize();
+
+    return await this.apiClient.get("/booking");
+  }
+
 }
