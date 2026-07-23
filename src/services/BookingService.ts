@@ -28,4 +28,53 @@ export class BookingService extends BaseService {
     return await this.apiClient.get("/booking");
   }
 
+  public async updateBooking(
+  bookingId: number,
+  bookingData: unknown,
+  token: string
+): Promise<APIResponse> {
+
+  await this.initialize();
+
+  return await this.apiClient.put(
+    `/booking/${bookingId}`,
+    bookingData,
+    {
+      Cookie: `token=${token}`
+    }
+  );
+}
+
+public async partialUpdateBooking(
+  bookingId: number,
+  bookingData: unknown,
+  token: string
+): Promise<APIResponse> {
+
+  await this.initialize();
+
+  return await this.apiClient.patch(
+    `/booking/${bookingId}`,
+    bookingData,
+    {
+      Cookie: `token=${token}`
+    }
+  );
+}
+
+public async deleteBooking(
+  bookingId: number,
+  token: string
+): Promise<APIResponse> {
+
+  await this.initialize();
+
+  return await this.apiClient.delete(
+    `/booking/${bookingId}`,
+    {
+      Cookie: `token=${token}`
+    }
+  );
+}
+
 }
