@@ -4,10 +4,10 @@ import { AuthService } from "../../src/services/AuthService";
 test("POST /auth should return a token", async () => {
   const authService = new AuthService();
 
-  const response = await authService.login(
-    "admin",
-    "password123"
-  );
+  const response = await authService.login({
+    username:"admin",
+    password:"password123"
+});
 
   expect(response.ok()).toBeTruthy();
 

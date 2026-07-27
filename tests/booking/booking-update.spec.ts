@@ -1,20 +1,28 @@
 import { expect, test } from "@playwright/test";
 import { AuthService } from "../../src/services/AuthService";
 import { BookingService } from "../../src/services/BookingService";
+import { AuthRequest } from "../../src/models/AuthRequest";
+import { BookingRequest } from "../../src/models/BookingRequest";
 
 test("PUT /booking/{id} should update a booking", async () => {
   const authService = new AuthService();
   const bookingService = new BookingService();
 
   // Obtener token
-  const authResponse = await authService.login("admin", "password123");
+  const credentials: AuthRequest = {
+    username: "admin",
+    password: "password123"
+  };
+
+  const authResponse = await authService.login(credentials);
+
   expect(authResponse.ok()).toBeTruthy();
 
   const authBody = await authResponse.json();
   const token = authBody.token;
 
   // Crear booking
-  const bookingData = {
+  const bookingData: BookingRequest = {
     firstname: "Jim",
     lastname: "Brown",
     totalprice: 111,
@@ -27,15 +35,16 @@ test("PUT /booking/{id} should update a booking", async () => {
   };
 
   const createResponse = await bookingService.createBooking(bookingData);
+
   expect(createResponse.ok()).toBeTruthy();
 
   const createdBooking = await createResponse.json();
   const bookingId = createdBooking.bookingid;
 
-  /* 
+  /*
   // Inicio Prueba 1 - PUT
 
-  const updatedBooking = {
+  const updatedBooking: BookingRequest = {
     firstname: "James",
     lastname: "Brown",
     totalprice: 250,
@@ -61,34 +70,33 @@ test("PUT /booking/{id} should update a booking", async () => {
   expect(body.totalprice).toBe(250);
   expect(body.depositpaid).toBe(false);
 
-  //Inicio Prueba 2 - PATCH
-  
- const partialBooking = {
-  firstname: "Peter",
-  additionalneeds: "Dinner"
-};
+  // Inicio Prueba 2 - PATCH
 
-const patchResponse = await bookingService.partialUpdateBooking(
-  bookingId,
-  partialBooking,
-  token
-);
+  const partialBooking = {
+    firstname: "Peter",
+    additionalneeds: "Dinner"
+  };
 
-expect(patchResponse.ok()).toBeTruthy();
+  const patchResponse = await bookingService.partialUpdateBooking(
+    bookingId,
+    partialBooking,
+    token
+  );
 
-const body = await patchResponse.json();
+  expect(patchResponse.ok()).toBeTruthy();
 
-expect(body.firstname).toBe("Peter");
-expect(body.additionalneeds).toBe("Dinner");
-*/
+  const patchBody = await patchResponse.json();
 
-//Inicio Prueba 3 - DELETE
+  expect(patchBody.firstname).toBe("Peter");
+  expect(patchBody.additionalneeds).toBe("Dinner");
+  */
 
-const deleteResponse = await bookingService.deleteBooking(
-  bookingId,
-  token
-);
+  // Inicio Prueba 3 - DELETE
 
-expect(deleteResponse.status()).toBe(201);
+  const deleteResponse = await bookingService.deleteBooking(
+    bookingId,
+    token
+  );
 
-});     
+  expect(deleteResponse.status()).toBe(201);
+});
