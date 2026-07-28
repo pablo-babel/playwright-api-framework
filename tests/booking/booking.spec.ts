@@ -1,21 +1,11 @@
 import { expect, test } from "@playwright/test";
 import { BookingService } from "../../src/services/BookingService";
-import { BookingRequest } from "../../src/models/BookingRequest";
+import { BookingFactory } from "../../src/factories/BookingFactory";
 
 test("POST /booking should create a booking", async () => {
   const bookingService = new BookingService();
 
-  const bookingData: BookingRequest = {
-    firstname: "Jim",
-    lastname: "Brown",
-    totalprice: 111,
-    depositpaid: true,
-    bookingdates: {
-      checkin: "2026-01-01",
-      checkout: "2026-01-05",
-    },
-    additionalneeds: "Breakfast",
-  };
+  const bookingData = BookingFactory.create();
 
   const response = await bookingService.createBooking(bookingData);
 
@@ -42,17 +32,7 @@ test("GET /booking should return booking ids", async () => {
 test("GET /booking/{id} should return a booking", async () => {
   const bookingService = new BookingService();
 
-  const bookingData: BookingRequest = {
-    firstname: "Jim",
-    lastname: "Brown",
-    totalprice: 111,
-    depositpaid: true,
-    bookingdates: {
-      checkin: "2026-01-01",
-      checkout: "2026-01-05",
-    },
-    additionalneeds: "Breakfast",
-  };
+  const bookingData = BookingFactory.create();
 
   const createResponse = await bookingService.createBooking(bookingData);
 
@@ -68,8 +48,9 @@ test("GET /booking/{id} should return a booking", async () => {
 
   const body = await response.json();
 
-  expect(body.firstname).toBe("Jim");
-  expect(body.lastname).toBe("Brown");
-  expect(body.totalprice).toBe(111);
-  expect(body.depositpaid).toBe(true);
+  expect(body.firstname).toBe(bookingData.firstname);
+  expect(body.lastname).toBe(bookingData.lastname);
+  expect(body.totalprice).toBe(bookingData.totalprice);
+  expect(body.depositpaid).toBe(bookingData.depositpaid);
+  expect(body.additionalneeds).toBe(bookingData.additionalneeds);
 });
