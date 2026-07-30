@@ -1,6 +1,7 @@
 import { expect, test } from "@playwright/test";
 import { BookingService } from "../../src/services/BookingService";
 import { BookingFactory } from "../../src/factories/BookingFactory";
+import { BookingBuilder } from "../../src/builders/BookingBuilder";
 
 test("POST /booking should create a booking", async () => {
   const bookingService = new BookingService();
@@ -32,7 +33,13 @@ test("GET /booking should return booking ids", async () => {
 test("GET /booking/{id} should return a booking", async () => {
   const bookingService = new BookingService();
 
-  const bookingData = BookingFactory.create();
+  const bookingData = new BookingBuilder()
+    .withFirstname("Juan")
+    .withLastname("Pérez")
+    .withTotalPrice(500)
+    .withDepositPaid(false)
+    .withAdditionalNeeds("Dinner")
+    .build();
 
   const createResponse = await bookingService.createBooking(bookingData);
 
