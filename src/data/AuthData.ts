@@ -1,0 +1,11 @@
+export const AuthData = {
+  validCredentials: {
+    username: "admin",
+    password: "password123",
+  },
+
+  invalidCredentials: {
+    username: "admin",
+    password: "invalidPassword",
+  },
+};
