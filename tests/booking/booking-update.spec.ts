@@ -1,20 +1,17 @@
 import { expect, test } from "@playwright/test";
 import { AuthService } from "../../src/services/AuthService";
 import { BookingService } from "../../src/services/BookingService";
-import { AuthRequest } from "../../src/models/AuthRequest";
-import { BookingRequest } from "../../src/models/BookingRequest";
+import { AuthData } from "../../src/data/AuthData";
+import { BookingData } from "../../src/data/BookingData";
 
 test("PUT /booking/{id} should update a booking", async () => {
   const authService = new AuthService();
   const bookingService = new BookingService();
 
   // Obtener token
-  const credentials: AuthRequest = {
-    username: "admin",
-    password: "password123"
-  };
-
-  const authResponse = await authService.login(credentials);
+  const authResponse = await authService.login(
+    AuthData.validCredentials
+  );
 
   expect(authResponse.ok()).toBeTruthy();
 
@@ -22,19 +19,9 @@ test("PUT /booking/{id} should update a booking", async () => {
   const token = authBody.token;
 
   // Crear booking
-  const bookingData: BookingRequest = {
-    firstname: "Jim",
-    lastname: "Brown",
-    totalprice: 111,
-    depositpaid: true,
-    bookingdates: {
-      checkin: "2026-01-01",
-      checkout: "2026-01-05"
-    },
-    additionalneeds: "Breakfast"
-  };
-
-  const createResponse = await bookingService.createBooking(bookingData);
+  const createResponse = await bookingService.createBooking(
+    BookingData.defaultBooking
+  );
 
   expect(createResponse.ok()).toBeTruthy();
 
@@ -44,21 +31,9 @@ test("PUT /booking/{id} should update a booking", async () => {
   /*
   // Inicio Prueba 1 - PUT
 
-  const updatedBooking: BookingRequest = {
-    firstname: "James",
-    lastname: "Brown",
-    totalprice: 250,
-    depositpaid: false,
-    bookingdates: {
-      checkin: "2026-02-01",
-      checkout: "2026-02-10"
-    },
-    additionalneeds: "Lunch"
-  };
-
   const updateResponse = await bookingService.updateBooking(
     bookingId,
-    updatedBooking,
+    BookingData.updatedBooking,
     token
   );
 
@@ -66,20 +41,23 @@ test("PUT /booking/{id} should update a booking", async () => {
 
   const body = await updateResponse.json();
 
-  expect(body.firstname).toBe("James");
-  expect(body.totalprice).toBe(250);
-  expect(body.depositpaid).toBe(false);
+  expect(body.firstname).toBe(
+    BookingData.updatedBooking.firstname
+  );
+
+  expect(body.totalprice).toBe(
+    BookingData.updatedBooking.totalprice
+  );
+
+  expect(body.depositpaid).toBe(
+    BookingData.updatedBooking.depositpaid
+  );
 
   // Inicio Prueba 2 - PATCH
 
-  const partialBooking = {
-    firstname: "Peter",
-    additionalneeds: "Dinner"
-  };
-
   const patchResponse = await bookingService.partialUpdateBooking(
     bookingId,
-    partialBooking,
+    BookingData.partialBooking,
     token
   );
 
@@ -87,8 +65,13 @@ test("PUT /booking/{id} should update a booking", async () => {
 
   const patchBody = await patchResponse.json();
 
-  expect(patchBody.firstname).toBe("Peter");
-  expect(patchBody.additionalneeds).toBe("Dinner");
+  expect(patchBody.firstname).toBe(
+    BookingData.partialBooking.firstname
+  );
+
+  expect(patchBody.additionalneeds).toBe(
+    BookingData.partialBooking.additionalneeds
+  );
   */
 
   // Inicio Prueba 3 - DELETE

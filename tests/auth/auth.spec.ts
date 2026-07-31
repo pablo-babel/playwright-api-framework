@@ -1,13 +1,13 @@
 import { expect, test } from "@playwright/test";
 import { AuthService } from "../../src/services/AuthService";
+import { AuthData } from "../../src/data/AuthData";
 
 test("POST /auth should return a token", async () => {
   const authService = new AuthService();
 
-  const response = await authService.login({
-    username:"admin",
-    password:"password123"
-});
+  const response = await authService.login(
+    AuthData.validCredentials
+  );
 
   expect(response.ok()).toBeTruthy();
 
