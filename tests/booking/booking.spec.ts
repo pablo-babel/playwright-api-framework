@@ -47,13 +47,19 @@ test("GET /booking should return booking ids", async () => {
 
   const response = await bookingService.getBookingIds();
 
+  // Validar respuesta HTTP
   expect(response.ok()).toBeTruthy();
   expect(response.status()).toBe(200);
 
   const body = await response.json();
 
+  // Validar que la respuesta sea un arreglo
   expect(Array.isArray(body)).toBeTruthy();
   expect(body.length).toBeGreaterThan(0);
+
+  // Validar estructura del primer elemento
+  expect(body[0]).toHaveProperty("bookingid");
+  expect(typeof body[0].bookingid).toBe("number");
 });
 
 test("GET /booking/{id} should return a booking", async () => {
@@ -81,12 +87,31 @@ test("GET /booking/{id} should return a booking", async () => {
   // Consultar booking
   const response = await bookingService.getBooking(bookingId);
 
+  // Validar respuesta HTTP
   expect(response.ok()).toBeTruthy();
   expect(response.status()).toBe(200);
 
   const body = await response.json();
 
-  // Validar datos
+  // Validar estructura
+  expect(body).toHaveProperty("firstname");
+  expect(body).toHaveProperty("lastname");
+  expect(body).toHaveProperty("totalprice");
+  expect(body).toHaveProperty("depositpaid");
+  expect(body).toHaveProperty("bookingdates");
+  expect(body).toHaveProperty("additionalneeds");
+
+  expect(body.bookingdates).toHaveProperty("checkin");
+  expect(body.bookingdates).toHaveProperty("checkout");
+
+  // Validar tipos de datos
+  expect(typeof body.firstname).toBe("string");
+  expect(typeof body.lastname).toBe("string");
+  expect(typeof body.totalprice).toBe("number");
+  expect(typeof body.depositpaid).toBe("boolean");
+  expect(typeof body.additionalneeds).toBe("string");
+
+  // Validar contenido
   expect(body.firstname).toBe(bookingData.firstname);
   expect(body.lastname).toBe(bookingData.lastname);
   expect(body.totalprice).toBe(bookingData.totalprice);
