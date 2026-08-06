@@ -14,9 +14,13 @@ test("PUT /booking/{id} should update a booking", async () => {
   );
 
   expect(authResponse.ok()).toBeTruthy();
+  expect(authResponse.status()).toBe(200);
 
   const authBody = await authResponse.json();
   const token = authBody.token;
+
+  expect(token).toBeDefined();
+  expect(typeof token).toBe("string");
 
   // Crear booking
   const createResponse = await bookingService.createBooking(
@@ -24,12 +28,17 @@ test("PUT /booking/{id} should update a booking", async () => {
   );
 
   expect(createResponse.ok()).toBeTruthy();
+  expect(createResponse.status()).toBe(200);
 
   const createdBooking = await createResponse.json();
   const bookingId = createdBooking.bookingid;
 
-  /*
-  // Inicio Prueba 1 - PUT
+  expect(bookingId).toBeDefined();
+  expect(typeof bookingId).toBe("number");
+
+  // ==========================
+  // Prueba 1 - PUT
+  // ==========================
 
   const updateResponse = await bookingService.updateBooking(
     bookingId,
@@ -38,11 +47,35 @@ test("PUT /booking/{id} should update a booking", async () => {
   );
 
   expect(updateResponse.ok()).toBeTruthy();
+  expect(updateResponse.status()).toBe(200);
 
   const body = await updateResponse.json();
 
+  // Validar estructura
+  expect(body).toHaveProperty("firstname");
+  expect(body).toHaveProperty("lastname");
+  expect(body).toHaveProperty("totalprice");
+  expect(body).toHaveProperty("depositpaid");
+  expect(body).toHaveProperty("bookingdates");
+  expect(body).toHaveProperty("additionalneeds");
+
+  expect(body.bookingdates).toHaveProperty("checkin");
+  expect(body.bookingdates).toHaveProperty("checkout");
+
+  // Validar tipos
+  expect(typeof body.firstname).toBe("string");
+  expect(typeof body.lastname).toBe("string");
+  expect(typeof body.totalprice).toBe("number");
+  expect(typeof body.depositpaid).toBe("boolean");
+  expect(typeof body.additionalneeds).toBe("string");
+
+  // Validar contenido
   expect(body.firstname).toBe(
     BookingData.updatedBooking.firstname
+  );
+
+  expect(body.lastname).toBe(
+    BookingData.updatedBooking.lastname
   );
 
   expect(body.totalprice).toBe(
@@ -53,7 +86,22 @@ test("PUT /booking/{id} should update a booking", async () => {
     BookingData.updatedBooking.depositpaid
   );
 
-  // Inicio Prueba 2 - PATCH
+  expect(body.additionalneeds).toBe(
+    BookingData.updatedBooking.additionalneeds
+  );
+
+  expect(body.bookingdates.checkin).toBe(
+    BookingData.updatedBooking.bookingdates.checkin
+  );
+
+  expect(body.bookingdates.checkout).toBe(
+    BookingData.updatedBooking.bookingdates.checkout
+  );
+
+  /*
+  ===========================
+  Prueba 2 - PATCH
+  ===========================
 
   const patchResponse = await bookingService.partialUpdateBooking(
     bookingId,
@@ -72,9 +120,10 @@ test("PUT /booking/{id} should update a booking", async () => {
   expect(patchBody.additionalneeds).toBe(
     BookingData.partialBooking.additionalneeds
   );
-  */
 
-  // Inicio Prueba 3 - DELETE
+  ===========================
+  Prueba 3 - DELETE
+  ===========================
 
   const deleteResponse = await bookingService.deleteBooking(
     bookingId,
@@ -82,4 +131,5 @@ test("PUT /booking/{id} should update a booking", async () => {
   );
 
   expect(deleteResponse.status()).toBe(201);
+  */
 });
