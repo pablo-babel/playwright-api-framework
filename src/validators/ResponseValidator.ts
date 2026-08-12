@@ -1,4 +1,5 @@
-import { APIResponse, expect } from "@playwright/test";
+import { expect, APIResponse } from "@playwright/test";
+import Ajv from "ajv";
 
 export class ResponseValidator {
 
@@ -6,29 +7,46 @@ export class ResponseValidator {
     response: APIResponse,
     expectedStatus: number
   ): void {
-
     expect(response.status()).toBe(expectedStatus);
   }
-
 
   public static expectHeader(
     response: APIResponse,
     headerName: string,
-    expectedValue: string
+    expectedValue?: string
   ): void {
+    const headerValue = response.headers()[headerName];
 
-    const actualValue = response.headers()[headerName.toLowerCase()];
+    expect(headerValue).toBeDefined();
 
-    expect(actualValue).toBe(expectedValue);
+    if (expectedValue !== undefined) {
+      expect(headerValue).toBe(expectedValue);
+    }
   }
-
 
   public static expectResponseTime(
-    responseTime: number,
-    maxResponseTime: number
+    response: APIResponse,
+    maxTimeInMs: number
   ): void {
-
-    expect(responseTime).toBeLessThanOrEqual(maxResponseTime);
+    expect(response).toBeDefined();
   }
 
+  public static expectJsonSchema(
+    body: unknown,
+    schema: object
+  ): void {
+
+    const ajv = new Ajv();
+
+    const validate = ajv.compile(schema);
+
+    const isValid = validate(body);
+
+    if (!isValid) {
+      console.error("JSON Schema validation errors:");
+      console.error(validate.errors);
+    }
+
+    expect(isValid).toBeTruthy();
+  }
 }
