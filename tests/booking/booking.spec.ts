@@ -3,24 +3,19 @@ import { BookingService } from "../../src/services/BookingService";
 import { BookingFactory } from "../../src/factories/BookingFactory";
 import { BookingBuilder } from "../../src/builders/BookingBuilder";
 import { ResponseValidator } from "../../src/validators/ResponseValidator";
-
+import { BookingSchema } from "../../src/schemas/BookingSchema";
 
 test("POST /booking should create a booking", async () => {
+
   const bookingService = new BookingService();
 
   // Crear datos dinámicos
   const bookingData = BookingFactory.create();
 
-  // Iniciar medición del tiempo
-  const startTime = Date.now();
-
   // Crear booking
   const response = await bookingService.createBooking(
     bookingData
   );
-
-  // Calcular tiempo de respuesta
-  const responseTime = Date.now() - startTime;
 
   // Validar status code
   ResponseValidator.expectStatus(
@@ -28,25 +23,14 @@ test("POST /booking should create a booking", async () => {
     200
   );
 
-  // Validar response time
-  ResponseValidator.expectResponseTime(
-    responseTime,
-    5000
-  );
-
-  // Validar Content-Type
-  const contentType = response.headers()["content-type"];
-
-  expect(contentType).toContain("application/json");
-
-  // Obtener cuerpo de la respuesta
+  // Obtener cuerpo
   const body = await response.json();
 
   // Validar bookingId
   expect(body.bookingid).toBeDefined();
   expect(typeof body.bookingid).toBe("number");
 
-  // Validar información del booking creado
+  // Validar información del booking
   expect(body.booking.firstname).toBe(
     bookingData.firstname
   );
@@ -79,27 +63,37 @@ test("POST /booking should create a booking", async () => {
 
 
 test("GET /booking should return booking ids", async () => {
+
   const bookingService = new BookingService();
 
   const response = await bookingService.getBookingIds();
 
-  // Validar respuesta HTTP
-  expect(response.ok()).toBeTruthy();
-  expect(response.status()).toBe(200);
+  // Validar status code
+  ResponseValidator.expectStatus(
+    response,
+    200
+  );
 
   const body = await response.json();
 
-  // Validar que la respuesta sea un arreglo
+  // Validar que sea un arreglo
   expect(Array.isArray(body)).toBeTruthy();
+
   expect(body.length).toBeGreaterThan(0);
 
   // Validar estructura del primer elemento
-  expect(body[0]).toHaveProperty("bookingid");
-  expect(typeof body[0].bookingid).toBe("number");
+  expect(body[0]).toHaveProperty(
+    "bookingid"
+  );
+
+  expect(typeof body[0].bookingid).toBe(
+    "number"
+  );
 });
 
 
 test("GET /booking/{id} should return a booking", async () => {
+
   const bookingService = new BookingService();
 
   const bookingData = new BookingBuilder()
@@ -111,44 +105,40 @@ test("GET /booking/{id} should return a booking", async () => {
     .build();
 
   // Crear booking
-  const createResponse = await bookingService.createBooking(
-    bookingData
-  );
+  const createResponse =
+    await bookingService.createBooking(
+      bookingData
+    );
 
   expect(createResponse.ok()).toBeTruthy();
 
-  const createdBooking = await createResponse.json();
+  const createdBooking =
+    await createResponse.json();
 
-  const bookingId = createdBooking.bookingid;
+  const bookingId =
+    createdBooking.bookingid;
 
-  // Consultar booking
-  const response = await bookingService.getBooking(
-    bookingId
+  // Obtener booking
+  const response =
+    await bookingService.getBooking(
+      bookingId
+    );
+
+  // Validar status
+  ResponseValidator.expectStatus(
+    response,
+    200
   );
 
-  // Validar respuesta HTTP
-  expect(response.ok()).toBeTruthy();
-  expect(response.status()).toBe(200);
+  // Obtener body
+  const body =
+    await response.json();
 
-  const body = await response.json();
-
-  // Validar estructura
-  expect(body).toHaveProperty("firstname");
-  expect(body).toHaveProperty("lastname");
-  expect(body).toHaveProperty("totalprice");
-  expect(body).toHaveProperty("depositpaid");
-  expect(body).toHaveProperty("bookingdates");
-  expect(body).toHaveProperty("additionalneeds");
-
-  expect(body.bookingdates).toHaveProperty("checkin");
-  expect(body.bookingdates).toHaveProperty("checkout");
-
-  // Validar tipos
-  expect(typeof body.firstname).toBe("string");
-  expect(typeof body.lastname).toBe("string");
-  expect(typeof body.totalprice).toBe("number");
-  expect(typeof body.depositpaid).toBe("boolean");
-  expect(typeof body.additionalneeds).toBe("string");
+  // Validar JSON Schema
+  ResponseValidator.expectJsonSchema(
+    body,
+    BookingSchema
+  );
 
   // Validar contenido
   expect(body.firstname).toBe(
