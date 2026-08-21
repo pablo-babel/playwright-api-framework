@@ -1,4 +1,4 @@
-import { defineConfig, devices } from "@playwright/test";
+import { defineConfig } from "@playwright/test";
 
 export default defineConfig({
   testDir: "./tests",
@@ -11,7 +11,15 @@ export default defineConfig({
 
   workers: process.env.CI ? 1 : undefined,
 
-  reporter: "html",
+  reporter: [
+    [
+      "html",
+      {
+        outputFolder: "playwright-report",
+        open: "never",
+      },
+    ],
+  ],
 
   use: {
     trace: "on-first-retry",
@@ -20,6 +28,7 @@ export default defineConfig({
   projects: [
     {
       name: "smoke",
+
       testMatch: [
         "**/auth/auth.spec.ts",
         "**/booking/booking.spec.ts",
@@ -28,6 +37,7 @@ export default defineConfig({
 
     {
       name: "regression",
+
       testMatch: [
         "**/*.spec.ts",
       ],
@@ -35,6 +45,7 @@ export default defineConfig({
 
     {
       name: "integration",
+
       testMatch: [
         "**/booking/bookingUpdate.spec.ts",
         "**/negative/bookingNegative.spec.ts",
