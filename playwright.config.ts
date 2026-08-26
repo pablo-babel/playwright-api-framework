@@ -29,18 +29,13 @@ export default defineConfig({
     {
       name: "smoke",
 
-      testMatch: [
-        "**/auth/auth.spec.ts",
-        "**/booking/booking.spec.ts",
-      ],
+      testMatch: ["**/auth/auth.spec.ts", "**/booking/booking.spec.ts"],
     },
 
     {
       name: "regression",
 
-      testMatch: [
-        "**/*.spec.ts",
-      ],
+      testMatch: ["**/*.spec.ts"],
     },
 
     {

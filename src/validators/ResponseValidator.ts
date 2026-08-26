@@ -23,16 +23,11 @@ export class ResponseValidator {
     }
   }
 
-  public static expectResponseTime(
-    response: APIResponse
-  ): void {
+  public static expectResponseTime(response: APIResponse): void {
     expect(response).toBeDefined();
   }
 
-  public static expectJsonSchema(
-    body: unknown,
-    schema: object
-  ): void {
+  public static expectJsonSchema(body: unknown, schema: object): void {
     const ajv = new Ajv();
 
     const validate = ajv.compile(schema);

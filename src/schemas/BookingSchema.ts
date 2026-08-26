@@ -6,40 +6,37 @@ export const BookingSchema = {
     "totalprice",
     "depositpaid",
     "bookingdates",
-    "additionalneeds"
+    "additionalneeds",
   ],
   properties: {
     firstname: {
-      type: "string"
+      type: "string",
     },
     lastname: {
-      type: "string"
+      type: "string",
     },
     totalprice: {
-      type: "number"
+      type: "number",
     },
     depositpaid: {
-      type: "boolean"
+      type: "boolean",
     },
     bookingdates: {
       type: "object",
-      required: [
-        "checkin",
-        "checkout"
-      ],
+      required: ["checkin", "checkout"],
       properties: {
         checkin: {
-          type: "string"
+          type: "string",
         },
         checkout: {
-          type: "string"
-        }
+          type: "string",
+        },
       },
-      additionalProperties: false
+      additionalProperties: false,
     },
     additionalneeds: {
-      type: "string"
-    }
+      type: "string",
+    },
   },
-  additionalProperties: false
+  additionalProperties: false,
 } as const;

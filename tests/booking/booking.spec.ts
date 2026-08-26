@@ -11,9 +11,7 @@ test("POST /booking should create a booking", async () => {
   const bookingData = BookingFactory.create();
 
   // Crear booking
-  const response = await bookingService.createBooking(
-    bookingData
-  );
+  const response = await bookingService.createBooking(bookingData);
 
   // Validar status code
   ResponseValidator.expectStatus(response, 200);
@@ -26,25 +24,15 @@ test("POST /booking should create a booking", async () => {
   expect(typeof body.bookingid).toBe("number");
 
   // Validar información del booking creado
-  expect(body.booking.firstname).toBe(
-    bookingData.firstname
-  );
+  expect(body.booking.firstname).toBe(bookingData.firstname);
 
-  expect(body.booking.lastname).toBe(
-    bookingData.lastname
-  );
+  expect(body.booking.lastname).toBe(bookingData.lastname);
 
-  expect(body.booking.totalprice).toBe(
-    bookingData.totalprice
-  );
+  expect(body.booking.totalprice).toBe(bookingData.totalprice);
 
-  expect(body.booking.depositpaid).toBe(
-    bookingData.depositpaid
-  );
+  expect(body.booking.depositpaid).toBe(bookingData.depositpaid);
 
-  expect(body.booking.additionalneeds).toBe(
-    bookingData.additionalneeds
-  );
+  expect(body.booking.additionalneeds).toBe(bookingData.additionalneeds);
 
   // Validar fechas
   expect(body.booking.bookingdates.checkin).toBe(
@@ -89,9 +77,7 @@ test("GET /booking/{id} should return a booking", async () => {
     .build();
 
   // Crear booking
-  const createResponse = await bookingService.createBooking(
-    bookingData
-  );
+  const createResponse = await bookingService.createBooking(bookingData);
 
   ResponseValidator.expectStatus(createResponse, 200);
 
@@ -100,9 +86,7 @@ test("GET /booking/{id} should return a booking", async () => {
   const bookingId = createdBooking.bookingid;
 
   // Consultar booking
-  const response = await bookingService.getBooking(
-    bookingId
-  );
+  const response = await bookingService.getBooking(bookingId);
 
   // Validar status code
   ResponseValidator.expectStatus(response, 200);
@@ -128,31 +112,17 @@ test("GET /booking/{id} should return a booking", async () => {
   expect(typeof body.additionalneeds).toBe("string");
 
   // Validar contenido
-  expect(body.firstname).toBe(
-    bookingData.firstname
-  );
+  expect(body.firstname).toBe(bookingData.firstname);
 
-  expect(body.lastname).toBe(
-    bookingData.lastname
-  );
+  expect(body.lastname).toBe(bookingData.lastname);
 
-  expect(body.totalprice).toBe(
-    bookingData.totalprice
-  );
+  expect(body.totalprice).toBe(bookingData.totalprice);
 
-  expect(body.depositpaid).toBe(
-    bookingData.depositpaid
-  );
+  expect(body.depositpaid).toBe(bookingData.depositpaid);
 
-  expect(body.additionalneeds).toBe(
-    bookingData.additionalneeds
-  );
+  expect(body.additionalneeds).toBe(bookingData.additionalneeds);
 
-  expect(body.bookingdates.checkin).toBe(
-    bookingData.bookingdates.checkin
-  );
+  expect(body.bookingdates.checkin).toBe(bookingData.bookingdates.checkin);
 
-  expect(body.bookingdates.checkout).toBe(
-    bookingData.bookingdates.checkout
-  );
+  expect(body.bookingdates.checkout).toBe(bookingData.bookingdates.checkout);
 });

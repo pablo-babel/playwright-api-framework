@@ -9,9 +9,7 @@ test("PUT /booking/{id} should return 403 with an invalid token", async () => {
   // Crear booking válido
   const bookingData = BookingFactory.create();
 
-  const createResponse = await bookingService.createBooking(
-    bookingData
-  );
+  const createResponse = await bookingService.createBooking(bookingData);
 
   ResponseValidator.expectStatus(createResponse, 200);
 
@@ -39,9 +37,7 @@ test("GET /booking/{id} should return 404 for a non-existing booking", async () 
   // ID que no debería existir
   const nonExistingBookingId = 999999999;
 
-  const response = await bookingService.getBooking(
-    nonExistingBookingId
-  );
+  const response = await bookingService.getBooking(nonExistingBookingId);
 
   // Validar que el recurso no existe
   ResponseValidator.expectStatus(response, 404);

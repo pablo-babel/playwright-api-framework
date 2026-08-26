@@ -6,9 +6,9 @@ El objetivo es aprender buenas prácticas de arquitectura, programación orienta
 
 ## Tecnologías
 
-* Node.js
-* TypeScript
-* Playwright
+- Node.js
+- TypeScript
+- Playwright
 
 ## Instalación
 

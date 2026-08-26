@@ -5,48 +5,31 @@ import { Endpoints } from "../config/Endpoints";
 import { Headers } from "../config/Headers";
 
 export class BookingService extends BaseService {
-
   public async createBooking(
     bookingData: BookingRequest
   ): Promise<APIResponse> {
-
     await this.initialize();
 
-    return await this.apiClient.post(
-      Endpoints.BOOKING,
-      bookingData
-    );
+    return await this.apiClient.post(Endpoints.BOOKING, bookingData);
   }
 
-
-  public async getBooking(
-    bookingId: number
-  ): Promise<APIResponse> {
-
+  public async getBooking(bookingId: number): Promise<APIResponse> {
     await this.initialize();
 
-    return await this.apiClient.get(
-      `${Endpoints.BOOKING}/${bookingId}`
-    );
+    return await this.apiClient.get(`${Endpoints.BOOKING}/${bookingId}`);
   }
-
 
   public async getBookingIds(): Promise<APIResponse> {
-
     await this.initialize();
 
-    return await this.apiClient.get(
-      Endpoints.BOOKING
-    );
+    return await this.apiClient.get(Endpoints.BOOKING);
   }
-
 
   public async updateBooking(
     bookingId: number,
     bookingData: BookingRequest,
     token: string
   ): Promise<APIResponse> {
-
     await this.initialize();
 
     return await this.apiClient.put(
@@ -56,13 +39,11 @@ export class BookingService extends BaseService {
     );
   }
 
-
   public async partialUpdateBooking(
     bookingId: number,
     bookingData: Partial<BookingRequest>,
     token: string
   ): Promise<APIResponse> {
-
     await this.initialize();
 
     return await this.apiClient.patch(
@@ -72,12 +53,10 @@ export class BookingService extends BaseService {
     );
   }
 
-
   public async deleteBooking(
     bookingId: number,
     token: string
   ): Promise<APIResponse> {
-
     await this.initialize();
 
     return await this.apiClient.delete(
@@ -85,5 +64,4 @@ export class BookingService extends BaseService {
       Headers.auth(token)
     );
   }
-
 }
