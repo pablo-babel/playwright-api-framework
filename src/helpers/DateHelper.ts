@@ -1,5 +1,4 @@
 export class DateHelper {
-
   public static getCurrentDate(): string {
     return new Date().toISOString().split("T")[0];
   }

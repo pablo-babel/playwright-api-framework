@@ -2,7 +2,6 @@ import { BookingRequest } from "../models/BookingRequest";
 import { BookingFactory } from "../factories/BookingFactory";
 
 export class BookingBuilder {
-
   private booking: BookingRequest;
 
   constructor() {
@@ -37,5 +36,4 @@ export class BookingBuilder {
   public build(): BookingRequest {
     return this.booking;
   }
-
 }

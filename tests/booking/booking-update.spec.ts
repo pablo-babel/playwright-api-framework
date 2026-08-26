@@ -8,9 +8,7 @@ test("PUT /booking/{id} should update a booking", async () => {
   const authService = new AuthService();
   const bookingService = new BookingService();
 
-  const authResponse = await authService.login(
-    AuthData.validCredentials
-  );
+  const authResponse = await authService.login(AuthData.validCredentials);
 
   expect(authResponse.ok()).toBeTruthy();
   expect(authResponse.status()).toBe(200);
@@ -63,25 +61,15 @@ test("PUT /booking/{id} should update a booking", async () => {
   expect(typeof body.depositpaid).toBe("boolean");
   expect(typeof body.additionalneeds).toBe("string");
 
-  expect(body.firstname).toBe(
-    BookingData.updatedBooking.firstname
-  );
+  expect(body.firstname).toBe(BookingData.updatedBooking.firstname);
 
-  expect(body.lastname).toBe(
-    BookingData.updatedBooking.lastname
-  );
+  expect(body.lastname).toBe(BookingData.updatedBooking.lastname);
 
-  expect(body.totalprice).toBe(
-    BookingData.updatedBooking.totalprice
-  );
+  expect(body.totalprice).toBe(BookingData.updatedBooking.totalprice);
 
-  expect(body.depositpaid).toBe(
-    BookingData.updatedBooking.depositpaid
-  );
+  expect(body.depositpaid).toBe(BookingData.updatedBooking.depositpaid);
 
-  expect(body.additionalneeds).toBe(
-    BookingData.updatedBooking.additionalneeds
-  );
+  expect(body.additionalneeds).toBe(BookingData.updatedBooking.additionalneeds);
 
   expect(body.bookingdates.checkin).toBe(
     BookingData.updatedBooking.bookingdates.checkin
@@ -96,9 +84,7 @@ test("PATCH /booking/{id} should partially update a booking", async () => {
   const authService = new AuthService();
   const bookingService = new BookingService();
 
-  const authResponse = await authService.login(
-    AuthData.validCredentials
-  );
+  const authResponse = await authService.login(AuthData.validCredentials);
 
   expect(authResponse.ok()).toBeTruthy();
   expect(authResponse.status()).toBe(200);
@@ -124,12 +110,11 @@ test("PATCH /booking/{id} should partially update a booking", async () => {
 
   const bookingId = createdBooking.bookingid;
 
-  const patchResponse =
-    await bookingService.partialUpdateBooking(
-      bookingId,
-      BookingData.partialBooking,
-      token
-    );
+  const patchResponse = await bookingService.partialUpdateBooking(
+    bookingId,
+    BookingData.partialBooking,
+    token
+  );
 
   expect(patchResponse.ok()).toBeTruthy();
   expect(patchResponse.status()).toBe(200);
@@ -143,25 +128,15 @@ test("PATCH /booking/{id} should partially update a booking", async () => {
   expect(body).toHaveProperty("bookingdates");
   expect(body).toHaveProperty("additionalneeds");
 
-  expect(body.firstname).toBe(
-    BookingData.partialBooking.firstname
-  );
+  expect(body.firstname).toBe(BookingData.partialBooking.firstname);
 
-  expect(body.additionalneeds).toBe(
-    BookingData.partialBooking.additionalneeds
-  );
+  expect(body.additionalneeds).toBe(BookingData.partialBooking.additionalneeds);
 
-  expect(body.lastname).toBe(
-    BookingData.defaultBooking.lastname
-  );
+  expect(body.lastname).toBe(BookingData.defaultBooking.lastname);
 
-  expect(body.totalprice).toBe(
-    BookingData.defaultBooking.totalprice
-  );
+  expect(body.totalprice).toBe(BookingData.defaultBooking.totalprice);
 
-  expect(body.depositpaid).toBe(
-    BookingData.defaultBooking.depositpaid
-  );
+  expect(body.depositpaid).toBe(BookingData.defaultBooking.depositpaid);
 
   expect(body.bookingdates.checkin).toBe(
     BookingData.defaultBooking.bookingdates.checkin
@@ -176,9 +151,7 @@ test("DELETE /booking/{id} should delete a booking", async () => {
   const authService = new AuthService();
   const bookingService = new BookingService();
 
-  const authResponse = await authService.login(
-    AuthData.validCredentials
-  );
+  const authResponse = await authService.login(AuthData.validCredentials);
 
   expect(authResponse.ok()).toBeTruthy();
   expect(authResponse.status()).toBe(200);
@@ -204,16 +177,11 @@ test("DELETE /booking/{id} should delete a booking", async () => {
 
   const bookingId = createdBooking.bookingid;
 
-  const deleteResponse = await bookingService.deleteBooking(
-    bookingId,
-    token
-  );
+  const deleteResponse = await bookingService.deleteBooking(bookingId, token);
 
   expect(deleteResponse.status()).toBe(201);
 
-  const getResponse = await bookingService.getBooking(
-    bookingId
-  );
+  const getResponse = await bookingService.getBooking(bookingId);
 
   expect(getResponse.status()).toBe(404);
 });

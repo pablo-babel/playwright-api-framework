@@ -25,33 +25,33 @@ export class ApiClient {
   }
 
   public async put(
-  url: string,
-  data?: unknown,
-  headers?: Record<string, string>
-): Promise<APIResponse> {
-  return await this.apiContext.put(url, {
-    data,
-    headers,
-  });
-}
+    url: string,
+    data?: unknown,
+    headers?: Record<string, string>
+  ): Promise<APIResponse> {
+    return await this.apiContext.put(url, {
+      data,
+      headers,
+    });
+  }
 
-public async patch(
-  url: string,
-  data?: unknown,
-  headers?: Record<string, string>
-): Promise<APIResponse> {
-  return await this.apiContext.patch(url, {
-    data,
-    headers,
-  });
-}
+  public async patch(
+    url: string,
+    data?: unknown,
+    headers?: Record<string, string>
+  ): Promise<APIResponse> {
+    return await this.apiContext.patch(url, {
+      data,
+      headers,
+    });
+  }
 
-public async delete(
-  url: string,
-  headers?: Record<string, string>
-): Promise<APIResponse> {
-  return await this.apiContext.delete(url, {
-    headers,
-  });
-}
+  public async delete(
+    url: string,
+    headers?: Record<string, string>
+  ): Promise<APIResponse> {
+    return await this.apiContext.delete(url, {
+      headers,
+    });
+  }
 }
