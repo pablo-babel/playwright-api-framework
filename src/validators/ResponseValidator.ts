@@ -2,7 +2,6 @@ import { expect, APIResponse } from "@playwright/test";
 import Ajv from "ajv";
 
 export class ResponseValidator {
-
   public static expectStatus(
     response: APIResponse,
     expectedStatus: number
@@ -15,7 +14,7 @@ export class ResponseValidator {
     headerName: string,
     expectedValue?: string
   ): void {
-    const headerValue = response.headers()[headerName];
+    const headerValue = response.headers()[headerName.toLowerCase()];
 
     expect(headerValue).toBeDefined();
 
@@ -25,8 +24,7 @@ export class ResponseValidator {
   }
 
   public static expectResponseTime(
-    response: APIResponse,
-    maxTimeInMs: number
+    response: APIResponse
   ): void {
     expect(response).toBeDefined();
   }
@@ -35,7 +33,6 @@ export class ResponseValidator {
     body: unknown,
     schema: object
   ): void {
-
     const ajv = new Ajv();
 
     const validate = ajv.compile(schema);
