@@ -80,6 +80,7 @@ Para ejecutar el proyecto correctamente, configura las variables necesarias seg�
 
 ## Ejecutar las pruebas
 
+Q
 Para ejecutar todas las pruebas:
 
 ```bash
@@ -444,3 +445,10 @@ Hasta el momento se han trabajado conceptos como:
 - Buenas prácticas de código.
 
 El proyecto continuará incorporando nuevas mejoras y conceptos de automatización durante las siguientes etapas.
+
+## Documentación
+
+Documentación adicional del framework:
+
+- [Arquitectura](docs/architecture.md)
+- [Cómo agregar un nuevo Service](docs/adding-new-service.md)
