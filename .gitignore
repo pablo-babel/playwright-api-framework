@@ -12,3 +12,5 @@ coverage/
 dist/
 out/
 reports/
+playwright-report/
+test-results/
